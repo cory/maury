@@ -10,3 +10,5 @@ Code to process and filter ship course data from open ICOADS Maury data set, ava
 * wind.js -- plot images of recoreded wind speed and direction
 * speed.js -- test to see what images look like if they plot ship speed, not that interesting
 * drawing.js -- use the awesome gm interface for node.js to blur images as a test.
+
+If you don't want to download the data on your own, preprocessed voyage data here via dropbox [https://www.dropbox.com/s/x76rgn7b6wlchra/voyages.txt.zip]. 
