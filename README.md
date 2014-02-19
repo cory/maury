@@ -7,6 +7,8 @@ Code to process and filter ship course data from open ICOADS Maury data set, ava
 * parallel.js -- because processing the ICOADS data hits v8 memory limits, use parallels to run find_voyages.js in parallel.
 * maury.js -- given voyages.txt (which you make with find_voyages.txt), produce .pngs of voyages. Usage like:
   node --max-old-space-size=1700 maury.js startyear endyear step voyages.txt outputname
+  Produces images like:
+  ![Maury voyage data 1660-1853](maury-example.png "Maury voyage data 1660-1853")
 * wind.js -- plot images of recoreded wind speed and direction
 * speed.js -- test to see what images look like if they plot ship speed, not that interesting
 * drawing.js -- use the awesome gm interface for node.js to blur images as a test.
