@@ -1,8 +1,9 @@
 var fs = require('fs'),
     readline = require('readline'),
 		path = require('path'),
-		PNG = require('pngjs').PNG;
-  	dir = __dirname + '/imgs'
+		PNG = require('pngjs').PNG,
+  	dir = __dirname + '/imgs',
+		gm = require('gm');
 
 var myArgs = process.argv.slice(2);
 
@@ -14,8 +15,10 @@ var filePath = path.join(__dirname + '/' + myArgs[3]);
 
 var outputPath = dir + "/" + myArgs[4];
 
-var width = 2000;
-var height = 800;
+var width = 10000;
+var height = 4000;
+
+var scaledown = 5;
 
 var latRes = 0.01;
 var lonRes = 0.01;
@@ -58,7 +61,7 @@ function addPoint(x,y) {
 	var idx = pt2idx(x,y);
 	pt_count++;
 	if (idx in pts) {
-		if (pts[idx].count < 100)
+		if (pts[idx].count < 100/scaledown/scaledown)
 			pts[idx].count++;
 	} else {
 		pts[idx] = {count:1,x:x,y:y};
@@ -119,7 +122,19 @@ function dump_png(name) {
 		png.data[idx  ] = (ratio*0xff)|0;
 	}
 	console.log("writing image " + name);
-	png.pack().pipe(fs.createWriteStream(name));
+	var outpipe = fs.createWriteStream(name);
+	png.pack().pipe(outpipe);
+	outpipe.on("finish",function() {
+		/*
+		gm(name)
+		  .blur(5,5)
+		  .resize((width/scaledown)|0,(height/scaledown)|0)
+		  .write(name, function(err){
+		    if (err) return console.dir(arguments)
+		    console.log(this.outname + ' created :: ' + arguments[3]);
+		  });
+		*/
+	});
 }
 
 function dist2(x0,y0,x1,y1) {
@@ -158,11 +173,11 @@ function drawVoyages(name,start,end) {
 		var voyage = voyages[v];
 		if (voyage[1] <= end && voyage[2] >= start) {
 			for (var p=3;p<voyage.length-5;p += 5) {
-				var drawy0 = (height*0.5 - voyage[p+3]/latMax*height*0.5)|0;
-				var drawx0 = ((voyage[p+4]/lonMax*width+3*width/4)%width)|0;
-				var drawy1 = (height*0.5 - voyage[p+5+3]/latMax*height*0.5)|0;
-				var drawx1 = ((voyage[p+5+4]/lonMax*width+3*width/4)%width)|0;
-				if (dist2(drawx0,drawy0,drawx1,drawy1) < 400) {
+				var drawy0 = (height*0.5 - voyage[p+3]/latMax*height*0.5+0.5)|0;
+				var drawx0 = ((voyage[p+4]/lonMax*width+3*width/4)%width+0.5)|0;
+				var drawy1 = (height*0.5 - voyage[p+5+3]/latMax*height*0.5+0.5)|0;
+				var drawx1 = ((voyage[p+5+4]/lonMax*width+3*width/4)%width+0.5)|0;
+				if (dist2(drawx0,drawy0,drawx1,drawy1) < width/5) {
 				  found = true;
 					draw_line(drawx0,drawy0,drawx1,drawy1);
 				}
