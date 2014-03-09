@@ -8,9 +8,11 @@ Code to process and filter ship course data from open ICOADS Maury data set, ava
 * maury.js -- given voyages.txt (which you make with find_voyages.txt), produce .pngs of voyages. Usage like:
   node --max-old-space-size=1700 maury.js startyear endyear step voyages.txt outputname
   Produces images like:
-  ![Maury voyage data 1660-1853](maury-example.png "Maury voyage data 1660-1853")
-* wind.js -- plot images of recoreded wind speed and direction
-* speed.js -- test to see what images look like if they plot ship speed, not that interesting
-* drawing.js -- use the awesome gm interface for node.js to blur images as a test.
+  ![Maury voyage data 1660-1853](maury-example.png "Maury voyage data 1660-1853")  
+* wind.js -- plot images of recoreded wind speed and direction  
+* speed.js -- test to see what images look like if they plot ship speed, not that interesting  
+* drawing.js -- use the awesome gm interface for node.js to blur images as a test 
+* build-animated -- graphics magick command to make an animated gif
+* build-gifs.js -- poorly named file that adds a year into an image via graphics magic (was going to also animate but used previous command instead)
 
 If you don't want to download the data on your own, preprocessed voyage data here via dropbox [https://www.dropbox.com/s/x76rgn7b6wlchra/voyages.txt.zip]. 
