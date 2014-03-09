@@ -15,10 +15,10 @@ var filePath = path.join(__dirname + '/' + myArgs[3]);
 
 var outputPath = dir + "/" + myArgs[4];
 
-var width = 10000;
-var height = 4000;
+var width = 2000;
+var height = 800;
 
-var scaledown = 5;
+var scaledown = 1;
 
 var latRes = 0.01;
 var lonRes = 0.01;
